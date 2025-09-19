@@ -48,8 +48,8 @@
   <div class="shell">
     <div class="card">
       <header>
-        <div class="brand">mikro‑koulutus</div>
-        <div class="meta" id="meta">Lähde: —</div>
+        <div class="brand">Sähkösuunnittelijan peruskoulutus</div>
+        <div class="meta" id="meta"><!--Lähde: — --></div>
       </header>
 
       <div class="progress"><div id="bar" style="width:0%"></div></div>
@@ -66,7 +66,7 @@
 
       <div class="dots" id="dots"></div>
 
-      <details class="dev"><summary>Parserin testit (dev)</summary>
+      <details class="dev"><!-- <summary>Parserin testit (dev)</summary>-->
         <ul id="tests"></ul>
       </details>
     </div>
@@ -76,12 +76,12 @@
   <script type="text/csv" id="csv">
 id;type;title;illustration;body;bullets;question;options;correctIndex;explanation;theme_primary;theme_accent;theme_bg;theme_text
 Projektihakemisto;content;Projektihakemisto;📂;Kun Sähköprojekti perustetaan G:n Projektinhallinnassa, se luo projektihakemistojen ohjeissa esitetyn mallin mukaisen hakemistorakenteen. Tarvittaessa hakemistoja saadaan lisättyä myös jälkeenpäin.;;;;;#278062;#ED8113;#F4F2EE;#1E2A28;
-Alihakemistot;content;Alihakemistot;📁;Sähköpiirustuksiin kuuluvat CAD-tiedostot tallennetaan aina projektin tai kiinteistön CAD-hakemiston alihakemistoihin käyttötarkoituksensa mukaisesti projektihakemisto-ohjeiden mukaisesti.;Projektin tavoiteasiakirja (PoA)|Vaatimusmäärittely: tilat, kuormat, kriittisyysluokat|Elinkaaritavoitteet ja energiatehokkuus;;;;;;;;
-YleisetProjektitiedostot;content;Tiedostot, joita ei esitetä asiakirjaluettelossa;🙈;Asiakirjaluetteloon kuulumattomat projektin yleiset tiedostot tallennetaan M-filesin projektiarkistoon.;BIM/IFC-mallit ja koordinaatit|Sähköverkon nykytilan dokumentit|Rajauslista (in/out);;;;;;;;
-Laskelmat;content;Tekniset laskelmat;📐;Erilaiset tekniset laskelmat (esim. valaistuslaskennat) tallennetaan Tekninen laskenta -hakemiston alihakemistoihin käyttötarkoituksensa mukaisesti.;Rajapintamatriisi|Koordinointipalaverin rytmi|Muutoshallintatapa;;;;;;;;
+Alihakemistot;content;Alihakemistot;📁;Sähköpiirustuksiin kuuluvat CAD-tiedostot tallennetaan aina projektin tai kiinteistön CAD-hakemiston alihakemistoihin käyttötarkoituksensa mukaisesti projektihakemisto-ohjeiden mukaisesti.;;;;;;;;;
+YleisetProjektitiedostot;content;Tiedostot, joita ei esitetä asiakirjaluettelossa;🙈;Asiakirjaluetteloon kuulumattomat projektin yleiset tiedostot tallennetaan M-filesin projektiarkistoon.;Palaverimuistiot|Lähtötiedot|Suunnitteluvaiheilmoitukset;;;;;;;;
+Laskelmat;content;Tekniset laskelmat;📐;Erilaiset tekniset laskelmat  tallennetaan Tekninen laskenta -hakemiston alihakemistoihin käyttötarkoituksensa mukaisesti.;Verkostolaskelmat|Valaistuslaskelmat;;;;;;;;
 Asetustiedostot;content;Ohjelmistojen asetustiedostot;⚙️;MagiCad Electrical -ohjelmiston kiinteistö- ja projektikohtaiset tiedostot (kuten .MEP ja .MRD tiedostot) tallennetaan pääsääntöisesti projektihakemistoon kohdenumeron (..\123xxx\123456) alle.;;;;;;;;;
-Sekalaiset;content;Kaikki muut mahdolliset tiedostot;🗂️;Muut kuin Asiakirjaluetteloon liitetyt CAD-tiedostot (esim. kopioimista varten tehdyt blokit ja tilapäistiedostot) täytyy ehdottomasti tallentaa projektin Temp-hakemistoonn. Tällöin ne on helppo tunnistaa hakemistoja siivottaessa. Temp-hakemistoon voi tehdä myös alihakemistoja ja nimetä ne oman käyttäjätunnuksen mukaan.;;;;;;;;;
-Kysymykset;quiz;Pikakysymys;❓;;;Mikä dokumentti auttaa varmistamaan vastuurajat ja ehkäisee aukkoja?;PoA|Rajapintamatriisi|Tilaluettelo;1;Rajapintamatriisi tekee vastuista ja liitynnöistä näkyviä.;;;;
+Sekalaiset;content;Kaikki muut mahdolliset tiedostot;🗂️;Muut kuin Asiakirjaluetteloon liitetyt CAD-tiedostot  täytyy ehdottomasti tallentaa projektin Temp-hakemistoonn. Tällöin ne on helppo tunnistaa hakemistoja siivottaessa. Temp-hakemistoon voi tehdä myös alihakemistoja ja nimetä ne oman käyttäjätunnuksen mukaan.;Kopioimista varten tehdyt blokit|Muut tilapäistiedostot;;;;;;;;
+Kysymykset;quiz;Miten se nyt olikaan?;❓;;;M-Files projektiarkistoon tallennetaan;Arkkitehtikuvat|Palaverimuistiot|Ohjelmien asetustiedostot;1;Asiakirjaluetteloon kuulumattomat projektin yleiset tiedostot tallennetaan M-filesin projektiarkistoon.;;;;
 yhteenveto;content;Yhteenveto;📝;Onnistunut aloitus: selkeät tavoitteet, täydet lähtötiedot, sovitut rajapinnat, realistinen aikataulu ja sovittu laatutapa.;;;;;;;;;
   </script>
 
