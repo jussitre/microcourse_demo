@@ -184,24 +184,7 @@ yhteenveto;content;Yhteenveto;📝;Nyt tiedät projektihakemiston ja siinä olev
     document.getElementById('next').onclick=()=>{ idx=Math.min(slides.length-1,idx+1); localStorage.setItem('mc:progress',idx); render(); };
     window.addEventListener('keydown',e=>{ if(e.key==='ArrowLeft') document.getElementById('prev').click(); if(e.key==='ArrowRight' || e.key==='Enter') document.getElementById('next').click(); });
 
-    // ===== Testit parsereille (ei muuta toimintaa) =====
-    function runParserTests(){
-      const cases=[
-        { name:'perus', csv:'a,b\n1,2', exp:[{a:'1',b:'2'}] },
-        { name:'pilkku lainauskentässä', csv:'a,b\n"1,1",2', exp:[{a:'1,1',b:'2'}] },
-        { name:'rivinvaihto lainauskentässä', csv:'a,b\n"r1\nr2",x', exp:[{a:'r1\nr2',b:'x'}] },
-        { name:'tuplalainaus kentässä', csv:'a\n"He said ""Hi"""', exp:[{a:'He said "Hi"'}] },
-        { name:'CRLF rivinvaihto', csv:'a,b\r\n1,2\r\n3,4\r\n', exp:[{a:'1',b:'2'},{a:'3',b:'4'}] },
-        { name:'tyhjä viimeinen kenttä', csv:'a,b\n1,\n', exp:[{a:'1',b:''}] },
-        { name:'puolipilkku erotin', csv:'a;b\n1;2', exp:[{a:'1',b:'2'}] },
-        { name:'puolipilkku lainauskentässä', csv:'a;b\n"1;1";2', exp:[{a:'1;1',b:'2'}] },
-        { name:'tyhjä rivi ohitetaan', csv:'a,b\n\n1,2', exp:[{a:'1',b:'2'}] },
-        { name:'UTF‑8 BOM header', csv:'\ufeffa,b\n1,2', exp:[{a:'1',b:'2'}] },
-        { name:'quoted empty', csv:'a,b\n"",2', exp:[{a:'',b:'2'}] },
-      ];
-      const ul=document.getElementById('tests'); ul.innerHTML='';
-      for(const c of cases){ const out=parseCSV(c.csv); const pass=JSON.stringify(out)===JSON.stringify(c.exp); const li=document.createElement('li'); li.textContent=c.name+': '+(pass?'PASS':'FAIL'); ul.appendChild(li); }
-    }
+
 
     // ===== Käynnistys =====
     (async function init(){
