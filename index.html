@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mikro‑koulutus (standalone)</title>
+  <title>Pikakoulutus (testi)</title>
   <style>
     :root{
-      --c-primary:#278062; /* Granlund‑henkinen vihreä */
+      --c-primary:#278062;
       --c-accent:#ED8113;
       --c-bg:#F4F2EE;
       --c-text:#1E2A28;
@@ -75,12 +75,14 @@
   <!-- Upotettu CSV fallback: jos fetch("course.csv") epäonnistuu, käytä tätä -->
   <script type="text/csv" id="csv">
 id,type,title,illustration,body,bullets,question,options,correctIndex,explanation,theme_primary,theme_accent,theme_bg,theme_text
-intro,content,Mitä ja miksi?,✉️,"Projektin aloitus määrittää suunnittelun onnistumisen. Tässä mikro‑koulutuksessa käydään läpi sähkösuunnittelun aloituksen olennaiset kohdat.",,,,,#278062,#ED8113,#F4F2EE,#1E2A28
-tavoitteet,content,Tavoitteet & vaatimukset,🎯,"Tarkenna asiakkaan tavoitteet (toiminnallisuus, aikataulu, kustannus, hiilijalanjälki), viranomaisvaatimukset ja tilaajan standardit.","Projektin tavoiteasiakirja (PoA)|Vaatimusmäärittely: tilat, kuormat, kriittisyysluokat|Elinkaaritavoitteet ja energiatehokkuus",,,,,
-lahtotiedot,content,Lähtötiedot & rajaukset,📦,"Kokoa lähtötiedot: arkkitehtimallit, tilaluettelot, prosessikuvaukset, vanhat piirustukset, kaapelireitit ja mittausraportit. Sovi mitä EI sisälly.","BIM/IFC-mallit ja koordinaatit|Sähköverkon nykytilan dokumentit|Rajauslista (in/out)",,,,,
-rajapinnat,content,Rajapinnat & yhteensovitus,🧩,"Sovi liittymät ja vastuut eri suunnittelualojen välillä: LVI, automaatio, tele/ICT, turvatekniikka, palotekniikka.","Rajapintamatriisi|Koordinointipalaverin rytmi|Muutoshallintatapa",,,,,
-testi,quiz,Pikakysymys,❓,,,"Mikä dokumentti auttaa varmistamaan vastuurajat ja ehkäisee aukkoja?","PoA|Rajapintamatriisi|Tilaluettelo",1,"Rajapintamatriisi tekee vastuista ja liitynnöistä näkyviä.",,,
-yhteenveto,content,Yhteenveto,✅,"Onnistunut aloitus: selkeät tavoitteet, täydet lähtötiedot, sovitut rajapinnat, realistinen aikataulu ja sovittu laatutapa.",,,,,,
+Projektihakemisto,content,Projektihakemisto,ðŸ“‚,"Kun SÃ¤hkÃ¶projekti perustetaan G:n Projektinhallinnassa, se luo projektihakemistojen ohjeissa esitetyn mallin mukaisen hakemistorakenteen. Tarvittaessa hakemistoja saadaan lisÃ¤ttyÃ¤ myÃ¶s jÃ¤lkeenpÃ¤in.",,,,,#278062,#ED8113,#F4F2EE,#1E2A28,
+Alihakemistot,content,Alihakemistot,ðŸ“,SÃ¤hkÃ¶piirustuksiin kuuluvat CAD-tiedostot tallennetaan aina projektin tai kiinteistÃ¶n CAD-hakemiston alihakemistoihin kÃ¤yttÃ¶tarkoituksensa mukaisesti projektihakemisto-ohjeiden mukaisesti.,"Projektin tavoiteasiakirja (PoA)|VaatimusmÃ¤Ã¤rittely: tilat, kuormat, kriittisyysluokat|Elinkaaritavoitteet ja energiatehokkuus",,,,,,,,
+YleisetProjektitiedostot,content,"Tiedostot, joita ei esitetÃ¤ asiakirjaluettelossa",ðŸ™ˆ,Asiakirjaluetteloon kuulumattomat projektin yleiset tiedostot tallennetaan M-filesin projektiarkistoon.,BIM/IFC-mallit ja koordinaatit|SÃ¤hkÃ¶verkon nykytilan dokumentit|Rajauslista (in/out),,,,,,,,
+Laskelmat,content,Tekniset laskelmat,ðŸ“,Erilaiset tekniset laskelmat (esim. valaistuslaskennat) tallennetaan Tekninen laskenta -hakemiston alihakemistoihin kÃ¤yttÃ¶tarkoituksensa mukaisesti.,Rajapintamatriisi|Koordinointipalaverin rytmi|Muutoshallintatapa,,,,,,,,
+Asetustiedostot,content,Ohjelmistojen asetustiedostot,âš™ï¸,MagiCad Electrical -ohjelmiston kiinteistÃ¶- ja projektikohtaiset tiedostot (kuten .MEP ja .MRD tiedostot) tallennetaan pÃ¤Ã¤sÃ¤Ã¤ntÃ¶isesti projektihakemistoon kohdenumeron (..\123xxx\123456) alle.,,,,,,,,,
+Sekalaiset,content,Kaikki muut mahdolliset tiedostot,ðŸ—‚ï¸,Muut kuin Asiakirjaluetteloon liitetyt CAD-tiedostot (esim. kopioimista varten tehdyt blokit ja tilapÃ¤istiedostot) tÃ¤ytyy ehdottomasti tallentaa projektin Temp-hakemistoonn. TÃ¤llÃ¶in ne on helppo tunnistaa hakemistoja siivottaessa. Temp-hakemistoon voi tehdÃ¤ myÃ¶s alihakemistoja ja nimetÃ¤ ne oman kÃ¤yttÃ¤jÃ¤tunnuksen mukaan.,,,,,,,,,
+Kysymykset,quiz,Pikakysymys,â“,,,MikÃ¤ dokumentti auttaa varmistamaan vastuurajat ja ehkÃ¤isee aukkoja?,PoA|Rajapintamatriisi|Tilaluettelo,1,Rajapintamatriisi tekee vastuista ja liitynnÃ¶istÃ¤ nÃ¤kyviÃ¤.,,,,
+yhteenveto,content,Yhteenveto,ðŸ“,"Onnistunut aloitus: selkeÃ¤t tavoitteet, tÃ¤ydet lÃ¤htÃ¶tiedot, sovitut rajapinnat, realistinen aikataulu ja sovittu laatutapa.",,,,,,,,,
   </script>
 
   <script>
