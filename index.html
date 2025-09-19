@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mikro‑koulutus (standalone)</title>
+  <style>
+    :root{
+      --c-primary:#278062; /* Granlund‑henkinen vihreä */
+      --c-accent:#ED8113;
+      --c-bg:#F4F2EE;
+      --c-text:#1E2A28;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;background:var(--c-bg);color:var(--c-text)}
+    .shell{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:16px}
+    .card{width:100%;max-width:860px;background:#fff;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.08);padding:24px 24px 32px}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+    header .brand{font-weight:900;letter-spacing:.2px;color:var(--c-primary)}
+    header .meta{font-size:12px;color:#6b7280}
+    .progress{height:8px;background:#E6E4E0;border-radius:99px;margin:8px 0 20px}
+    .progress > div{height:8px;border-radius:99px;background:var(--c-primary);transition:width .25s ease}
+    h1{margin:0 0 16px;text-align:center;color:var(--c-primary)}
+    .illus-wrap{display:flex;justify-content:center;margin-bottom:16px}
+    .illus{width:160px;height:160px;border-radius:999px;display:flex;align-items:center;justify-content:center;font-size:56px;background:var(--c-primary);color:#F3F7F5}
+    article{max-width:720px;margin:0 auto;font-size:18px;line-height:1.6}
+    article ul{margin:8px 0 0 0;padding-left:22px}
+    nav.buttons{margin-top:24px;display:flex;align-items:center;justify-content:center;gap:12px}
+    button{cursor:pointer}
+    .btn{padding:10px 16px;border-radius:999px;border:2px solid var(--c-primary);background:#fff;color:var(--c-primary);box-shadow:0 2px 6px rgba(0,0,0,.06)}
+    .btn[disabled]{opacity:.4;cursor:not-allowed}
+    .btn.primary{background:var(--c-primary);color:#fff}
+    .dots{display:flex;justify-content:center;gap:8px;margin-top:18px}
+    .dot{width:8px;height:8px;border-radius:999px;background:#D7D3CC}
+    .dot.active{background:var(--c-primary)}
+    /* Quiz */
+    .options{display:grid;gap:10px;max-width:720px;margin:0 auto}
+    .opt{padding:12px 14px;border:1.5px solid var(--c-primary);border-radius:12px;background:#fff;text-align:left}
+    .opt.chosen{background:#F1F7F5;outline:2px solid #cfe7dd}
+    .feedback{margin-top:10px;display:flex;gap:8px;align-items:center}
+    .ok{color:var(--c-primary);font-weight:600}
+    .bad{color:#CC3A2B;font-weight:600}
+    details.dev{margin-top:24px;font-size:13px;color:#6b7280}
+    code.k{background:#F3F4F6;border-radius:6px;padding:2px 6px}
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="card">
+      <header>
+        <div class="brand">mikro‑koulutus</div>
+        <div class="meta" id="meta">Lähde: —</div>
+      </header>
+
+      <div class="progress"><div id="bar" style="width:0%"></div></div>
+
+      <h1 id="title">—</h1>
+      <div class="illus-wrap"><div class="illus" id="illus">📘</div></div>
+
+      <div id="content"></div>
+
+      <nav class="buttons">
+        <button class="btn" id="prev" aria-label="Edellinen">⟵</button>
+        <button class="btn primary" id="next" aria-label="Seuraava">Seuraava ⟶</button>
+      </nav>
+
+      <div class="dots" id="dots"></div>
+
+      <details class="dev"><summary>Parserin testit (dev)</summary>
+        <ul id="tests"></ul>
+      </details>
+    </div>
+  </div>
+
+  <!-- Upotettu CSV fallback: jos fetch("course.csv") epäonnistuu, käytä tätä -->
+  <script type="text/csv" id="csv">
+id,type,title,illustration,body,bullets,question,options,correctIndex,explanation,theme_primary,theme_accent,theme_bg,theme_text
+intro,content,Mitä ja miksi?,✉️,"Projektin aloitus määrittää suunnittelun onnistumisen. Tässä mikro‑koulutuksessa käydään läpi sähkösuunnittelun aloituksen olennaiset kohdat.",,,,,#278062,#ED8113,#F4F2EE,#1E2A28
+tavoitteet,content,Tavoitteet & vaatimukset,🎯,"Tarkenna asiakkaan tavoitteet (toiminnallisuus, aikataulu, kustannus, hiilijalanjälki), viranomaisvaatimukset ja tilaajan standardit.","Projektin tavoiteasiakirja (PoA)|Vaatimusmäärittely: tilat, kuormat, kriittisyysluokat|Elinkaaritavoitteet ja energiatehokkuus",,,,,
+lahtotiedot,content,Lähtötiedot & rajaukset,📦,"Kokoa lähtötiedot: arkkitehtimallit, tilaluettelot, prosessikuvaukset, vanhat piirustukset, kaapelireitit ja mittausraportit. Sovi mitä EI sisälly.","BIM/IFC-mallit ja koordinaatit|Sähköverkon nykytilan dokumentit|Rajauslista (in/out)",,,,,
+rajapinnat,content,Rajapinnat & yhteensovitus,🧩,"Sovi liittymät ja vastuut eri suunnittelualojen välillä: LVI, automaatio, tele/ICT, turvatekniikka, palotekniikka.","Rajapintamatriisi|Koordinointipalaverin rytmi|Muutoshallintatapa",,,,,
+testi,quiz,Pikakysymys,❓,,,"Mikä dokumentti auttaa varmistamaan vastuurajat ja ehkäisee aukkoja?","PoA|Rajapintamatriisi|Tilaluettelo",1,"Rajapintamatriisi tekee vastuista ja liitynnöistä näkyviä.",,,
+yhteenveto,content,Yhteenveto,✅,"Onnistunut aloitus: selkeät tavoitteet, täydet lähtötiedot, sovitut rajapinnat, realistinen aikataulu ja sovittu laatutapa.",,,,,,
+  </script>
+
+  <script>
+    // ===== CSV PARSERI (automaattinen erotin tunnistus , vs ;) =====
+    function detectDelimiter(text){
+      let comma=0,semi=0,inQ=false;for(let i=0;i<text.length;i++){const ch=text[i];if(ch==='"'){if(text[i+1]==='"'){i++;continue;}inQ=!inQ;continue;}if(ch==='\n'||ch==='\r')break;if(!inQ){if(ch===',')comma++;else if(ch===';')semi++;}}return semi>comma?';':','}
+    function parseCSV(text, delimiter){
+      const delim = delimiter || detectDelimiter(text);
+      const rows=[], src=text+"\n"; let field="", row=[], inQ=false;
+      for(let i=0;i<src.length;i++){
+        const ch=src[i];
+        if(inQ){ if(ch==='"'){ if(src[i+1]==='"'){field+='"';i++;} else {inQ=false;} } else { field+=ch; } continue; }
+        if(ch==='"'){inQ=true;continue;}
+        if(ch===delim){row.push(field);field="";continue;}
+        if(ch==='\n'){ if(field.endsWith('\r')) field=field.slice(0,-1); row.push(field); rows.push(row); field=""; row=[]; continue; }
+        field+=ch;
+      }
+      if(!rows.length) return [];
+      const header=rows[0].map(h=>(h||"").trim());
+      if(header[0] && header[0].charCodeAt(0)===0xFEFF) header[0]=header[0].slice(1);
+      return rows.slice(1).filter(r=>r.some(c=>c && c.trim()!==""))
+                  .map(r=>{const o={}; header.forEach((h,i)=>o[h]=(r[i]??"").trim()); return o;});
+    }
+
+    // ===== SLIDES =====
+    function rowsToSlides(rows){
+      const slides=[]; for(const r of rows){
+        const type=(r.type||'content').toLowerCase();
+        if(type==='quiz'){
+          const opts=(r.options||'').split('|').map(s=>s.trim()).filter(Boolean);
+          const correctIndex=Number(r.correctIndex ?? 0);
+          slides.push({ id:r.id||`slide-${slides.length+1}`, type:'quiz', title:r.title||'Kysymys', illustration:r.illustration||'❓', question:r.question||'', options:opts, correctIndex:Number.isFinite(correctIndex)?correctIndex:0, explanation:r.explanation||'' });
+        } else {
+          const bullets=(r.bullets||'').split('|').map(s=>s.trim()).filter(Boolean);
+          slides.push({ id:r.id||`slide-${slides.length+1}`, type:'content', title:r.title||'Diojen otsikko', illustration:r.illustration||'📘', body:r.body||'', bullets:bullets.length?bullets:undefined });
+        }
+      } return slides;
+    }
+
+    // ===== LATAUS: 1) ?csv=URL 2) course.csv 3) upotettu <script type="text/csv"> =====
+    async function loadCsvText(){
+      const params=new URLSearchParams(location.search);
+      const url=params.get('csv');
+      if(url){
+        const res=await fetch(url,{cache:'no-store'}); if(!res.ok) throw new Error('HTTP '+res.status);
+        setSource('Sheets/URL'); return await res.text();
+      }
+      try{
+        const res=await fetch('course.csv',{cache:'no-store'}); if(res.ok){ setSource('course.csv'); return await res.text(); }
+      }catch{/* file:// voi estää fetchin */}
+      const el=document.getElementById('csv'); if(el){ setSource('Upotettu CSV'); return el.textContent.trim(); }
+      throw new Error('CSV:tä ei löytynyt');
+    }
+
+    // ===== SOVELLUS =====
+    let slides=[], idx=0; const metaEl=document.getElementById('meta');
+    function setSource(s){ metaEl.textContent='Lähde: '+s; }
+    function applyTheme(rows){
+      const pick=(k)=>{ const r=rows.find(r=>r[k] && r[k].startsWith('#')); return r? r[k] : null; };
+      const primary=pick('theme_primary')||getComputedStyle(document.documentElement).getPropertyValue('--c-primary');
+      const accent=pick('theme_accent')||getComputedStyle(document.documentElement).getPropertyValue('--c-accent');
+      const bg=pick('theme_bg')||getComputedStyle(document.documentElement).getPropertyValue('--c-bg');
+      const text=pick('theme_text')||getComputedStyle(document.documentElement).getPropertyValue('--c-text');
+      const root=document.documentElement; root.style.setProperty('--c-primary',primary); root.style.setProperty('--c-accent',accent); root.style.setProperty('--c-bg',bg); root.style.setProperty('--c-text',text);
+    }
+
+    function render(){
+      if(!slides.length) return;
+      const s=slides[Math.max(0,Math.min(idx,slides.length-1))];
+      document.getElementById('bar').style.width=((idx+1)/slides.length*100).toFixed(2)+'%';
+      document.getElementById('title').textContent=s.title;
+      document.getElementById('illus').textContent=s.illustration||'📘';
+      const content=document.getElementById('content'); content.innerHTML='';
+      if(s.type==='content'){
+        const art=document.createElement('article');
+        if(s.body){ const p=document.createElement('p'); p.textContent=s.body; p.style.marginBottom='10px'; art.appendChild(p); }
+        if(s.bullets){ const ul=document.createElement('ul'); s.bullets.forEach(b=>{ const li=document.createElement('li'); li.textContent=b; ul.appendChild(li); }); art.appendChild(ul); }
+        content.appendChild(art);
+      } else {
+        const p=document.createElement('p'); p.textContent=s.question; p.style.textAlign='center'; p.style.fontSize='18px'; p.style.marginBottom='10px'; content.appendChild(p);
+        const grid=document.createElement('div'); grid.className='options';
+        const saved=JSON.parse(localStorage.getItem('mc:answers')||'{}');
+        const chosen=saved[s.id];
+        s.options.forEach((opt,i)=>{ const btn=document.createElement('button'); btn.className='opt'+(chosen===i?' chosen':''); btn.textContent=opt; btn.onclick=()=>{ const a=JSON.parse(localStorage.getItem('mc:answers')||'{}'); a[s.id]=i; localStorage.setItem('mc:answers',JSON.stringify(a)); render(); }; grid.appendChild(btn); });
+        content.appendChild(grid);
+        if(Number.isFinite(chosen)){
+          const fb=document.createElement('div'); fb.className='feedback';
+          const correct=chosen===s.correctIndex;
+          const tag=document.createElement('span'); tag.className=correct?'ok':'bad'; tag.textContent=correct?'Oikein!':'Ei aivan.';
+          const expl=document.createElement('span'); expl.textContent=' '+(s.explanation||'');
+          fb.appendChild(tag); fb.appendChild(expl); content.appendChild(fb);
+        }
+      }
+      const dots=document.getElementById('dots'); dots.innerHTML='';
+      slides.forEach((_,i)=>{ const d=document.createElement('span'); d.className='dot'+(i<=idx?' active':''); dots.appendChild(d); });
+    }
+
+    document.getElementById('prev').onclick=()=>{ idx=Math.max(0,idx-1); localStorage.setItem('mc:progress',idx); render(); };
+    document.getElementById('next').onclick=()=>{ idx=Math.min(slides.length-1,idx+1); localStorage.setItem('mc:progress',idx); render(); };
+    window.addEventListener('keydown',e=>{ if(e.key==='ArrowLeft') document.getElementById('prev').click(); if(e.key==='ArrowRight' || e.key==='Enter') document.getElementById('next').click(); });
+
+    // ===== Testit parsereille (ei muuta toimintaa) =====
+    function runParserTests(){
+      const cases=[
+        { name:'perus', csv:'a,b\n1,2', exp:[{a:'1',b:'2'}] },
+        { name:'pilkku lainauskentässä', csv:'a,b\n"1,1",2', exp:[{a:'1,1',b:'2'}] },
+        { name:'rivinvaihto lainauskentässä', csv:'a,b\n"r1\nr2",x', exp:[{a:'r1\nr2',b:'x'}] },
+        { name:'tuplalainaus kentässä', csv:'a\n"He said ""Hi"""', exp:[{a:'He said "Hi"'}] },
+        { name:'CRLF rivinvaihto', csv:'a,b\r\n1,2\r\n3,4\r\n', exp:[{a:'1',b:'2'},{a:'3',b:'4'}] },
+        { name:'tyhjä viimeinen kenttä', csv:'a,b\n1,\n', exp:[{a:'1',b:''}] },
+        { name:'puolipilkku erotin', csv:'a;b\n1;2', exp:[{a:'1',b:'2'}] },
+        { name:'puolipilkku lainauskentässä', csv:'a;b\n"1;1";2', exp:[{a:'1;1',b:'2'}] },
+        { name:'tyhjä rivi ohitetaan', csv:'a,b\n\n1,2', exp:[{a:'1',b:'2'}] },
+        { name:'UTF‑8 BOM header', csv:'\ufeffa,b\n1,2', exp:[{a:'1',b:'2'}] },
+        { name:'quoted empty', csv:'a,b\n"",2', exp:[{a:'',b:'2'}] },
+      ];
+      const ul=document.getElementById('tests'); ul.innerHTML='';
+      for(const c of cases){ const out=parseCSV(c.csv); const pass=JSON.stringify(out)===JSON.stringify(c.exp); const li=document.createElement('li'); li.textContent=c.name+': '+(pass?'PASS':'FAIL'); ul.appendChild(li); }
+    }
+
+    // ===== Käynnistys =====
+    (async function init(){
+      try{
+        const csvText=await loadCsvText();
+        const rows=parseCSV(csvText);
+        applyTheme(rows);
+        slides=rowsToSlides(rows);
+        const saved=Number(localStorage.getItem('mc:progress')||0); idx=Number.isFinite(saved)?saved:0;
+        render();
+      }catch(err){
+        document.getElementById('title').textContent='Virhe sisällön latauksessa';
+        document.getElementById('content').textContent=String(err);
+      }
+      runParserTests();
+    })();
+  </script>
+</body>
+</html>
